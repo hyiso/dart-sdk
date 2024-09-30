@@ -1078,7 +1078,7 @@ class DwarfAssemblyStream : public DwarfWriteStream {
 #if defined(DART_TARGET_OS_MACOS) || defined(DART_TARGET_OS_MACOS_IOS)
     stream_->WriteString(".section __DWARF,__debug_abbrev,regular,debug\n");
 #elif defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_ANDROID) ||      \
-    defined(DART_TARGET_OS_FUCHSIA)
+    defined(DART_TARGET_OS_FUCHSIA) || defined(DART_TARGET_OS_OHOS)
     stream_->WriteString(".section .debug_abbrev,\"\"\n");
 #else
     UNIMPLEMENTED();
@@ -1088,7 +1088,7 @@ class DwarfAssemblyStream : public DwarfWriteStream {
 #if defined(DART_TARGET_OS_MACOS) || defined(DART_TARGET_OS_MACOS_IOS)
     stream_->WriteString(".section __DWARF,__debug_info,regular,debug\n");
 #elif defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_ANDROID) ||      \
-    defined(DART_TARGET_OS_FUCHSIA)
+    defined(DART_TARGET_OS_FUCHSIA) || defined(DART_TARGET_OS_OHOS)
     stream_->WriteString(".section .debug_info,\"\"\n");
 #else
     UNIMPLEMENTED();
@@ -1100,7 +1100,7 @@ class DwarfAssemblyStream : public DwarfWriteStream {
 #if defined(DART_TARGET_OS_MACOS) || defined(DART_TARGET_OS_MACOS_IOS)
     stream_->WriteString(".section __DWARF,__debug_line,regular,debug\n");
 #elif defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_ANDROID) ||      \
-    defined(DART_TARGET_OS_FUCHSIA)
+    defined(DART_TARGET_OS_FUCHSIA) || defined(DART_TARGET_OS_OHOS)
     stream_->WriteString(".section .debug_line,\"\"\n");
 #else
     UNIMPLEMENTED();
@@ -1188,7 +1188,7 @@ void AssemblyImageWriter::Finalize() {
   }
 
 #if defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_ANDROID) ||        \
-    defined(DART_TARGET_OS_FUCHSIA)
+    defined(DART_TARGET_OS_FUCHSIA)  || defined(DART_TARGET_OS_OHOS)
   // Non-executable stack.
 #if defined(TARGET_ARCH_ARM)
   assembly_stream_->WriteString(".section .note.GNU-stack,\"\",%progbits\n");
@@ -1423,7 +1423,7 @@ void AssemblyImageWriter::WriteROData(NonStreamingWriteStream* clustered_stream,
     WriteBytes(bytes + last_position, symbol.offset - last_position);
     assembly_stream_->Printf("\"%s\":\n", symbol.name);
 #if defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_ANDROID) ||        \
-    defined(DART_TARGET_OS_FUCHSIA)
+    defined(DART_TARGET_OS_FUCHSIA)  || defined(DART_TARGET_OS_OHOS)
     // Output size and type of the read-only data symbol to the assembly stream.
     assembly_stream_->Printf(".size \"%s\", %zu\n", symbol.name, symbol.size);
     assembly_stream_->Printf(".type \"%s\", %%object\n", symbol.name);
@@ -1465,7 +1465,7 @@ bool AssemblyImageWriter::EnterSection(ProgramSection section,
       current_symbols_ =
           new (zone_) ZoneGrowableArray<Elf::SymbolData>(zone_, 0);
 #if defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_ANDROID) ||        \
-    defined(DART_TARGET_OS_FUCHSIA)
+    defined(DART_TARGET_OS_FUCHSIA)  || defined(DART_TARGET_OS_OHOS)
       assembly_stream_->WriteString(".section .rodata\n");
 #elif defined(DART_TARGET_OS_MACOS) || defined(DART_TARGET_OS_MACOS_IOS)
       assembly_stream_->WriteString(".const\n");
@@ -1522,7 +1522,7 @@ void AssemblyImageWriter::ExitSection(ProgramSection name,
   // We should still be in the same section as the last EnterSection.
   ASSERT_EQUAL(current_section_label_, SectionLabel(name, vm));
 #if defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_ANDROID) ||        \
-    defined(DART_TARGET_OS_FUCHSIA)
+    defined(DART_TARGET_OS_FUCHSIA)  || defined(DART_TARGET_OS_OHOS)
   // Output the size of the section symbol to the assembly stream.
   assembly_stream_->Printf(".size %s, %zu\n", SectionSymbol(name, vm), size);
   assembly_stream_->Printf(".type %s, %%object\n", SectionSymbol(name, vm));
@@ -1617,7 +1617,7 @@ void AssemblyImageWriter::AddCodeSymbol(const Code& code,
   }
   assembly_stream_->Printf("\"%s\":\n", symbol);
 #if defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_ANDROID) ||        \
-    defined(DART_TARGET_OS_FUCHSIA)
+    defined(DART_TARGET_OS_FUCHSIA) || defined(DART_TARGET_OS_OHOS)
   // Output the size of the code symbol to the assembly stream.
   assembly_stream_->Printf(".size \"%s\", %zu\n", symbol, code.Size());
   assembly_stream_->Printf(".type \"%s\", %%function\n", symbol);

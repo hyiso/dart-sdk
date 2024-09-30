@@ -36,6 +36,9 @@ struct sigset_t {};
 #elif defined(DART_HOST_OS_FUCHSIA)
 #include <signal.h>    // NOLINT
 #include <ucontext.h>  // NOLINT
+#elif defined(DART_HOST_OS_OHOS)
+#include <signal.h>    // NOLINT
+#include <ucontext.h>  // NOLINT
 #endif
 
 namespace dart {

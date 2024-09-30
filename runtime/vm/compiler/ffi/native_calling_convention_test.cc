@@ -665,7 +665,8 @@ UNIT_TEST_CASE_WITH_ZONE(NativeCallingConvention_regress46127) {
       RunSignatureTest(Z, "regress46127", arguments, struct_type);
 
 #if defined(TARGET_ARCH_IA32) &&                                               \
-    (defined(DART_TARGET_OS_ANDROID) || defined(DART_TARGET_OS_LINUX))
+    (defined(DART_TARGET_OS_ANDROID) || defined(DART_TARGET_OS_LINUX) ||       \
+    defined(DART_TARGET_OS_OHOS))
   // We must count the result pointer passed on the stack as well.
   EXPECT_EQ(4, native_calling_convention.StackTopInBytes());
 #else

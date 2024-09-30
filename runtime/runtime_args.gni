@@ -81,7 +81,7 @@ declare_args() {
   # ELF.
   build_analyze_snapshot =
       (target_os == "linux" || target_os == "android" ||
-       target_os == "fuchsia") &&
+       target_os == "fuchsia" || target_os == "ohos") &&
       (dart_target_arch == "x64" || dart_target_arch == "arm64" ||
        dart_target_arch == "riscv64")
 }

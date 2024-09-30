@@ -5,7 +5,7 @@
 #if !defined(DART_IO_SECURE_SOCKET_DISABLED)
 
 #include "platform/globals.h"
-#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
 
 #include "bin/security_context.h"
 
@@ -97,6 +97,6 @@ TrustEvaluateHandlerFunc SSLCertContext::GetTrustEvaluateHandler() const {
 }  // namespace bin
 }  // namespace dart
 
-#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
 
 #endif  // !defined(DART_IO_SECURE_SOCKET_DISABLED)

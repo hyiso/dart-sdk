@@ -20,7 +20,7 @@ class Monitor;
 #include "bin/thread_absl.h"
 #elif defined(DART_HOST_OS_FUCHSIA)
 #include "bin/thread_fuchsia.h"
-#elif defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#elif defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
 #include "bin/thread_linux.h"
 #elif defined(DART_HOST_OS_MACOS)
 #include "bin/thread_macos.h"

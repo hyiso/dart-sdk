@@ -164,7 +164,7 @@ static TimelineEventRecorder* CreateTimelineRecorder() {
 
   // Systrace recorder.
   if (strcmp("systrace", flag) == 0) {
-#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
     return new TimelineEventSystraceRecorder();
 #elif defined(DART_HOST_OS_MACOS)
     return new TimelineEventMacosRecorder();

@@ -40,7 +40,7 @@ void CPU::FlushICache(uword start, uword size) {
 // https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/sys_icache_invalidate.3.html
 #if defined(DART_HOST_OS_MACOS) || defined(DART_HOST_OS_IOS)
   sys_icache_invalidate(reinterpret_cast<void*>(start), size);
-#elif defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX)
+#elif defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_OHOS)
   char* beg = reinterpret_cast<char*>(start);
   char* end = reinterpret_cast<char*>(start + size);
   __builtin___clear_cache(beg, end);

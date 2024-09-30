@@ -4,7 +4,8 @@
 
 #include "vm/globals.h"
 #if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||          \
-    defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS)
+    defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
+    defined(DART_HOST_OS_OHOS)
 
 #include "platform/memory_sanitizer.h"
 #include "vm/native_symbol.h"
@@ -177,4 +178,5 @@ void NativeSymbolResolver::AddSymbols(const char* dso_name,
 }  // namespace dart
 
 #endif  // defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||   \
-        // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS)
+        // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||       \
+        // defined(DART_HOST_OS_OHOS)

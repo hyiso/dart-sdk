@@ -1084,6 +1084,8 @@ char* Dart::FeaturesString(IsolateGroup* isolate_group,
 #endif
 #elif defined(DART_TARGET_OS_LINUX)
     buffer.AddString(" linux");
+#elif defined(DART_TARGET_OS_OHOS)
+    buffer.AddString(" ohos");
 #elif defined(DART_TARGET_OS_WINDOWS)
     buffer.AddString(" windows");
 #else

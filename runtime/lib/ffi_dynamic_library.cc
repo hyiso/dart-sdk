@@ -23,7 +23,8 @@
 #include "vm/zone_text_buffer.h"
 
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
-    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA)
+    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||          \
+    defined(DART_HOST_OS_OHOS)
 #include <dlfcn.h>
 #endif
 
@@ -175,7 +176,8 @@ DEFINE_NATIVE_ENTRY(Ffi_dl_open, 0, 1) {
 
 DEFINE_NATIVE_ENTRY(Ffi_dl_processLibrary, 0, 0) {
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
-    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA)
+    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||          \
+    defined(DART_HOST_OS_OHOS)
   return DynamicLibrary::New(RTLD_DEFAULT, false);
 #else
   return DynamicLibrary::New(kWindowsDynamicLibraryProcessPtr, false);

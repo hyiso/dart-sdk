@@ -71,7 +71,7 @@ static void* ThreadStart(void* data_ptr) {
   uword parameter = data->parameter();
   delete data;
 
-#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX)
+#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_OHOS)
   // Set the thread name. There is 16 bytes limit on the name (including \0).
   // pthread_setname_np ignores names that are too long rather than truncating.
   char truncated_name[16];

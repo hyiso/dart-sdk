@@ -8,7 +8,8 @@
 #include "platform/globals.h"
 
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
-    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA)
+    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||          \
+    defined(DART_HOST_OS_OHOS)
 #include <dlfcn.h>
 #endif
 
@@ -258,7 +259,8 @@ static void GetLastErrorAsString(char** error) {
   if (error == nullptr) return;  // Nothing to do.
 
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
-    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA)
+    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||          \
+    defined(DART_HOST_OS_OHOS)
   const char* status = dlerror();
   *error = status != nullptr ? strdup(status) : nullptr;
 #elif defined(DART_HOST_OS_WINDOWS)
@@ -290,7 +292,8 @@ void* Utils::LoadDynamicLibrary(const char* library_path, char** error) {
   void* handle = nullptr;
 
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
-    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA)
+    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||          \
+    defined(DART_HOST_OS_OHOS)
   handle = dlopen(library_path, RTLD_LAZY);
 #elif defined(DART_HOST_OS_WINDOWS)
   SetLastError(0);  // Clear any errors.
@@ -325,7 +328,8 @@ void* Utils::ResolveSymbolInDynamicLibrary(void* library_handle,
   void* result = nullptr;
 
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
-    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA)
+    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||          \
+    defined(DART_HOST_OS_OHOS)
   dlerror();  // Clear any errors.
   result = dlsym(library_handle, symbol);
   // Note: nullptr might be a valid return from dlsym. Must call dlerror
@@ -349,7 +353,8 @@ void Utils::UnloadDynamicLibrary(void* library_handle, char** error) {
   bool ok = false;
 
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
-    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA)
+    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_FUCHSIA) ||          \
+    defined(DART_HOST_OS_OHOS)
   ok = dlclose(library_handle) == 0;
 #elif defined(DART_HOST_OS_WINDOWS)
   SetLastError(0);  // Clear any errors.

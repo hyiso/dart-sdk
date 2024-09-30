@@ -240,7 +240,7 @@ config("compiler") {
 
   # Linux/Android common flags setup.
   # ---------------------------------
-  if (is_linux || is_android) {
+  if (is_linux || is_android || is_ohos) {
     ldflags += [
       "-Wl,-z,noexecstack",
       "-Wl,-z,now",
@@ -249,7 +249,7 @@ config("compiler") {
     ]
   }
 
-  if (is_android || is_linux || is_mac || is_fuchsia) {
+  if (is_android || is_linux || is_mac || is_fuchsia || is_ohos) {
     if (use_flutter_cxx) {
       # shared_library_config isn't transitive, so we don't automatically get
       # another versions of libcxx with and without -fPIC. Properly setting this

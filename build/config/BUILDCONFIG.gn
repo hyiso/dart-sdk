@@ -168,6 +168,7 @@ if (current_os == "win") {
   is_linux = false
   is_mac = false
   is_nacl = false
+  is_ohos = false
   is_posix = false
   is_win = true
 } else if (current_os == "mac") {
@@ -178,6 +179,7 @@ if (current_os == "win") {
   is_linux = false
   is_mac = true
   is_nacl = false
+  is_ohos = false
   is_posix = true
   is_win = false
 } else if (current_os == "android") {
@@ -188,6 +190,7 @@ if (current_os == "win") {
   is_linux = false
   is_mac = false
   is_nacl = false
+  is_ohos = false
   is_posix = true
   is_win = false
 } else if (current_os == "linux") {
@@ -198,6 +201,7 @@ if (current_os == "win") {
   is_linux = true
   is_mac = false
   is_nacl = false
+  is_ohos = false
   is_posix = true
   is_win = false
 } else if (current_os == "fuchsia") {
@@ -208,6 +212,18 @@ if (current_os == "win") {
   is_linux = false
   is_mac = false
   is_nacl = false
+  is_ohos = false
+  is_posix = true
+  is_win = false
+} else if (current_os == "ohos") {
+  is_android = false
+  is_chromeos = false
+  is_fuchsia = false
+  is_ios = false
+  is_linux = false
+  is_mac = false
+  is_nacl = false
+  is_ohos = true
   is_posix = true
   is_win = false
 }

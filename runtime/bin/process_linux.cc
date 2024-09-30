@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 #include "platform/globals.h"
-#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
 
 #include "bin/process.h"
 
@@ -1162,4 +1162,4 @@ void Process::Cleanup() {
 }  // namespace bin
 }  // namespace dart
 
-#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)

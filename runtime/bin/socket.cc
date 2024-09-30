@@ -209,12 +209,12 @@ Dart_Handle ListeningSocketRegistry::CreateUnixDomainBindListen(
     return result;
   }
 
-#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
   // Abstract unix domain socket doesn't exist in file system.
   if (File::Exists(namespc, addr.un.sun_path) && path[0] != '@') {
 #else
   if (File::Exists(namespc, addr.un.sun_path)) {
-#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
     if (unix_domain_sockets_ != nullptr) {
       // If there is a socket listening on this file. Ensure
       // that it was created with `shared` mode and current `shared`
@@ -286,7 +286,7 @@ bool ListeningSocketRegistry::CloseOneSafe(OSSocket* os_socket,
   }
   // Unlink the socket file, if os_socket contains unix domain sockets.
   if (os_socket->address.addr.sa_family == AF_UNIX) {
-#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
     // If the socket is abstract, which has a path starting with a null byte,
     // unlink() is not necessary because the file doesn't exist.
     if (os_socket->address.un.sun_path[0] != '\0') {
@@ -294,7 +294,7 @@ bool ListeningSocketRegistry::CloseOneSafe(OSSocket* os_socket,
     }
 #else
     Utils::Unlink(os_socket->address.un.sun_path);
-#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
     // Remove os_socket from unix_domain_sockets_ list.
     OSSocket* prev = nullptr;
     OSSocket* current = unix_domain_sockets_;

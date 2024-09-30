@@ -35,7 +35,7 @@ namespace dart {
 
 // We support both VFPv3-D16 and VFPv3-D32 profiles, but currently only one at
 // a time.
-#if defined(DART_TARGET_OS_ANDROID) || defined(DART_TARGET_OS_LINUX)
+#if defined(DART_TARGET_OS_ANDROID) || defined(DART_TARGET_OS_LINUX) || defined(DART_TARGET_OS_OHOS)
 #define VFPv3_D16
 #elif defined(DART_TARGET_OS_MACOS_IOS) || defined(DART_TARGET_OS_WINDOWS)
 #define VFPv3_D32

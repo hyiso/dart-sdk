@@ -239,7 +239,8 @@ void Options::PrintUsage() {
 "  use for secure socket connections.\n"
 #if defined(DART_HOST_OS_LINUX) || \
     defined(DART_HOST_OS_ANDROID) || \
-    defined(DART_HOST_OS_FUCHSIA)
+    defined(DART_HOST_OS_FUCHSIA) || \
+    defined(DART_HOST_OS_OHOS)
 "--namespace=<path>\n"
 "  The path to a directory that dart:io calls will treat as the root of the\n"
 "  filesystem.\n"

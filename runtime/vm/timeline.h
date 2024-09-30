@@ -1209,7 +1209,7 @@ class TimelineEventFuchsiaRecorder : public TimelineEventPlatformRecorder {
 };
 #endif  // defined(DART_HOST_OS_FUCHSIA)
 
-#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX)
+#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_OHOS)
 // A recorder that writes events to Android Systrace. This class is exposed in
 // this header file only so that PrintSystrace can be visible to
 // timeline_test.cc.
@@ -1230,7 +1230,7 @@ class TimelineEventSystraceRecorder : public TimelineEventPlatformRecorder {
 
   int systrace_fd_;
 };
-#endif  // defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX)
+#endif  // defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_OHOS)
 
 #if defined(DART_HOST_OS_MACOS)
 // A recorder that sends events to macOS's tracing app. See:

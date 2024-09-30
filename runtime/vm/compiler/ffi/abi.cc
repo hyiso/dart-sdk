@@ -31,7 +31,7 @@ static_assert(offsetof(AbiAlignmentUint64, i) == 8,
               "FFI transformation alignment");
 #elif (defined(HOST_ARCH_IA32) && /* NOLINT(whitespace/parens) */              \
        (defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||          \
-        defined(DART_HOST_OS_ANDROID))) ||                                     \
+        defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS))) ||       \
     (defined(HOST_ARCH_ARM) && defined(DART_HOST_OS_IOS))
 static_assert(offsetof(AbiAlignmentDouble, d) == 4,
               "FFI transformation alignment");
@@ -59,6 +59,8 @@ static_assert(offsetof(AbiAlignmentUint64, i) == 8,
 #else
 #define DART_TARGET_OS_NAME MacOS
 #endif
+#elif defined(DART_TARGET_OS_OHOS)
+#define DART_TARGET_OS_NAME OHOS
 #elif defined(DART_TARGET_OS_WINDOWS)
 #define DART_TARGET_OS_NAME Windows
 #else

@@ -587,7 +587,7 @@ class DescriptorInfoMultipleMixin : public DI {
 // The event handler delegation class is OS specific.
 #if defined(DART_HOST_OS_FUCHSIA)
 #include "bin/eventhandler_fuchsia.h"
-#elif defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#elif defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
 #include "bin/eventhandler_linux.h"
 #elif defined(DART_HOST_OS_MACOS)
 #include "bin/eventhandler_macos.h"

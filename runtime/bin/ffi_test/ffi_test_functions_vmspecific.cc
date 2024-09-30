@@ -1297,7 +1297,7 @@ DART_EXPORT void WaitUntilNThreadsEnterBarrier(intptr_t num_threads) {
 ////////////////////////////////////////////////////////////////////////////////
 
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) ||            \
-    defined(DART_HOST_OS_MACOS)
+    defined(DART_HOST_OS_MACOS) || defined(DART_HOST_OS_OHOS)
 static bool Regress216834909_hang_at_exit = true;
 
 static void Regress216834909_AtExit() {

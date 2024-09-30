@@ -165,6 +165,11 @@ final class Platform {
   @pragma("vm:platform-const")
   static final bool isFuchsia = (operatingSystem == "fuchsia");
 
+  /// Whether the operating system is a version of OpenHarmony/HarmonyOS
+  /// [OpenHarmony](https://en.wikipedia.org/wiki/OpenHarmony)
+  /// [HarmonyOS](https://en.wikipedia.org/wiki/HarmonyOS)
+  static final bool isOhos = (operatingSystem == "ohos");
+
   /// The environment for this process as a map from string key to string value.
   ///
   /// The map is unmodifiable,

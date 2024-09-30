@@ -4,7 +4,7 @@
 
 #include "platform/globals.h"
 #if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) ||            \
-    defined(DART_HOST_OS_MACOS)
+    defined(DART_HOST_OS_MACOS) || defined(DART_HOST_OS_OHOS)
 
 #include "bin/virtual_memory.h"
 
@@ -12,7 +12,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX)
+#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_OHOS)
 #include <sys/prctl.h>
 #endif
 
@@ -56,6 +56,10 @@ VirtualMemory* VirtualMemory::Allocate(intptr_t size,
   // for indirect calls crossing a 4GB boundary. We ask mmap to place our
   // generated code near the VM binary to avoid this.
   void* hint = is_executable ? reinterpret_cast<void*>(&Allocate) : nullptr;
+
+#if defined(DART_HOST_OS_OHOS)
+    prctl(0x6a6974, 0, 0);
+#endif // defined(DART_HOST_OS_OHOS)
   void* address = mmap(hint, size, prot, map_flags, -1, 0);
 #if defined(DART_HOST_OS_LINUX)
   // On WSL 1 trying to allocate memory close to the binary by supplying a hint
@@ -68,11 +72,15 @@ VirtualMemory* VirtualMemory::Allocate(intptr_t size,
     address = mmap(nullptr, size, prot, map_flags, -1, 0);
   }
 #endif
+#if defined(DART_HOST_OS_OHOS)
+    prctl(0x6a6974, 0, 1);
+#endif // defined(DART_HOST_OS_OHOS)
+
   if (address == MAP_FAILED) {
     return nullptr;
   }
 
-#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX)
+#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_OHOS)
   // PR_SET_VMA was only added to mainline Linux in 5.17, and some versions of
   // the Android NDK have incorrect headers, so we manually define it if absent.
 #if !defined(PR_SET_VMA)
@@ -121,6 +129,10 @@ void VirtualMemory::Protect(void* address, intptr_t size, Protection mode) {
       prot = PROT_READ | PROT_WRITE | PROT_EXEC;
       break;
   }
+
+#if defined(DART_HOST_OS_OHOS)
+    prctl(0x6a6974, 0, 0);
+#endif // defined(DART_HOST_OS_OHOS)
   if (mprotect(reinterpret_cast<void*>(page_address),
                end_address - page_address, prot) != 0) {
     int error = errno;
@@ -129,10 +141,13 @@ void VirtualMemory::Protect(void* address, intptr_t size, Protection mode) {
     FATAL("mprotect error: %d (%s)", error,
           Utils::StrError(error, error_buf, kBufferSize));
   }
+#if defined(DART_HOST_OS_OHOS)
+    prctl(0x6a6974, 0, 1);
+#endif // defined(DART_HOST_OS_OHOS)
 }
 
 }  // namespace bin
 }  // namespace dart
 
 #endif  // defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) ||     \
-        // defined(DART_HOST_OS_MACOS)
+        // defined(DART_HOST_OS_MACOS) || defined(DART_HOST_OS_OHOS)

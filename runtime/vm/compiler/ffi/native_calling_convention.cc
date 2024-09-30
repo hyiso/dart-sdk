@@ -36,8 +36,9 @@ static bool SoftFpAbi(bool has_varargs, bool is_result) {
 #endif
 }
 #else  // !defined(FFI_UNIT_TESTS)
-static bool SoftFpAbi(bool has_varargs, bool is_result) {
-#if defined(TARGET_ARCH_ARM) && defined(DART_TARGET_OS_ANDROID)
+static bool SoftFpAbi() {
+#if defined(TARGET_ARCH_ARM) && (defined(DART_TARGET_OS_ANDROID) ||            \
+    defined(DART_TARGET_OS_OHOS))
   return true;
 #elif defined(TARGET_ARCH_ARM)
   return has_varargs;

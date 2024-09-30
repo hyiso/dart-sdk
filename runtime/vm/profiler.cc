@@ -420,7 +420,7 @@ void Profiler::DumpStackTrace(void* context) {
     return;
   }
 #if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOS) ||              \
-    defined(DART_HOST_OS_ANDROID)
+    defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
   ucontext_t* ucontext = reinterpret_cast<ucontext_t*>(context);
   mcontext_t mcontext = ucontext->uc_mcontext;
   uword pc = SignalHandler::GetProgramCounter(mcontext);

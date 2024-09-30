@@ -36,7 +36,7 @@ void CPU::FlushICache(uword start, uword size) {
 
 #if defined(DART_HOST_OS_MACOS) || defined(DART_HOST_OS_IOS)
   sys_icache_invalidate(reinterpret_cast<void*>(start), size);
-#elif defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX)
+#elif defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_OHOS)
   char* beg = reinterpret_cast<char*>(start);
   char* end = reinterpret_cast<char*>(start + size);
   __builtin___clear_cache(beg, end);

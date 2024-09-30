@@ -73,6 +73,10 @@ config("define_target_os_linux") {
   defines = [ "DART_TARGET_OS_LINUX" ]
 }
 
+config("define_target_os_ohos") {
+  defines = [ "DART_TARGET_OS_OHOS" ]
+}
+
 config("define_target_os_macos") {
   defines = [ "DART_TARGET_OS_MACOS" ]
 }

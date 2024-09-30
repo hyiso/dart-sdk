@@ -4,7 +4,7 @@
 
 #include "platform/globals.h"
 
-#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOSX)
+#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOSX) || defined(DART_HOST_OS_OHOS)
 #if defined(__has_feature)
 #if __has_feature(address_sanitizer)
 #if !defined(GOOGLE3)
@@ -25,4 +25,4 @@ __asan_default_options() {
 #endif  // !defined(GOOGLE3)
 #endif  // __has_feature(address_sanitizer)
 #endif  // defined(__has_feature)
-#endif  //  defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOSX)
+#endif  //  defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_MACOSX) || defined(DART_HOST_OS_OHOS)

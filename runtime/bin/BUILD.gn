@@ -30,6 +30,9 @@ config("libdart_builtin_config") {
       "log",
     ]
   }
+  if (is_ohos) {
+    libs +=[ "hilog_ndk.z" ]
+  }
 }
 
 config("export_api_symbols") {
@@ -496,7 +499,7 @@ template("dart_io") {
       ]
     }
 
-    if (is_linux || is_win || is_fuchsia) {
+    if (is_linux || is_win || is_fuchsia || is_ohos) {
       if (dart_use_fallback_root_certificates) {
         deps += [ "../../third_party/fallback_root_certificates" ]
       } else {

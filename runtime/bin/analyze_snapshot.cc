@@ -10,7 +10,8 @@
 #include "bin/platform.h"
 
 #if defined(TARGET_ARCH_IS_64_BIT) && defined(DART_PRECOMPILED_RUNTIME) &&     \
-    (defined(DART_TARGET_OS_ANDROID) || defined(DART_TARGET_OS_LINUX))
+    (defined(DART_TARGET_OS_ANDROID) || defined(DART_TARGET_OS_LINUX) ||       \
+    defined(DART_TARGET_OS_OHOS))
 #define SUPPORT_ANALYZE_SNAPSHOT
 #endif
 

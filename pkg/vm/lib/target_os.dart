@@ -8,6 +8,7 @@ enum TargetOS {
   iOS('ios', '/'),
   linux('linux', '/'),
   macOS('macos', '/'),
+  ohos('ohos', '/'),
   windows('windows', '\\');
 
   final String name;

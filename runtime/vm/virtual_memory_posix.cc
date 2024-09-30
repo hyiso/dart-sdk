@@ -4,9 +4,10 @@
 
 #include "vm/globals.h"
 #if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) ||            \
-    defined(DART_HOST_OS_MACOS)
+    defined(DART_HOST_OS_MACOS) || defined(DART_HOST_OS_OHOS)
 
 #include "vm/virtual_memory.h"
+#include "vm/os_thread.h"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -15,7 +16,7 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 
-#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX)
+#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_OHOS)
 #include <sys/prctl.h>
 #endif
 
@@ -48,6 +49,10 @@ DECLARE_FLAG(bool, write_protect_code);
 #if defined(DART_TARGET_OS_LINUX)
 DECLARE_FLAG(bool, generate_perf_events_symbols);
 DECLARE_FLAG(bool, generate_perf_jitdump);
+#endif
+
+#if defined(DART_HOST_OS_OHOS)
+  static Mutex prctl_lock_;
 #endif
 
 uword VirtualMemory::page_size_ = 0;
@@ -188,7 +193,7 @@ void VirtualMemory::Init() {
                                     compressed_heap_->size());
 #endif  // defined(DART_COMPRESSED_POINTERS)
 
-#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
   FILE* fp = fopen("/proc/sys/vm/max_map_count", "r");
   if (fp != nullptr) {
     size_t max_map_count = 0;
@@ -285,6 +290,11 @@ VirtualMemory* VirtualMemory::AllocateAligned(intptr_t size,
   if (is_executable) {
     hint = reinterpret_cast<void*>(&Dart_Initialize);
   }
+
+#if defined(DART_HOST_OS_OHOS)
+    MutexLocker ml(&prctl_lock_);
+    prctl(0x6a6974, 0, 0);
+#endif // defined(DART_HOST_OS_OHOS)
   void* address =
       GenericMapAligned(hint, prot, size, alignment, allocated_size, map_flags);
 #if defined(DART_HOST_OS_LINUX)
@@ -299,6 +309,9 @@ VirtualMemory* VirtualMemory::AllocateAligned(intptr_t size,
                                 map_flags);
   }
 #endif
+#if defined(DART_HOST_OS_OHOS)
+    prctl(0x6a6974, 0, 1);
+#endif // defined(DART_HOST_OS_OHOS)
   if (address == nullptr) {
     return nullptr;
   }
@@ -417,6 +430,12 @@ void VirtualMemory::Protect(void* address, intptr_t size, Protection mode) {
       prot = PROT_READ | PROT_WRITE | PROT_EXEC;
       break;
   }
+
+#if defined(DART_HOST_OS_OHOS)
+    MutexLocker ml(&prctl_lock_);
+    prctl(0x6a6974, 0, 0);
+#endif // defined(DART_HOST_OS_OHOS)
+
   if (mprotect(reinterpret_cast<void*>(page_address),
                end_address - page_address, prot) != 0) {
     int error = errno;
@@ -427,6 +446,11 @@ void VirtualMemory::Protect(void* address, intptr_t size, Protection mode) {
     FATAL("mprotect failed: %d (%s)", error,
           Utils::StrError(error, error_buf, kBufferSize));
   }
+
+#if defined(DART_HOST_OS_OHOS)
+    prctl(0x6a6974, 0, 1);
+#endif // defined(DART_HOST_OS_OHOS)
+
   LOG_INFO("mprotect(0x%" Px ", 0x%" Px ", %u) ok\n", page_address,
            end_address - page_address, prot);
 }
@@ -453,4 +477,4 @@ void VirtualMemory::DontNeed(void* address, intptr_t size) {
 }  // namespace dart
 
 #endif  // defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_LINUX) ||     \
-        // defined(DART_HOST_OS_MACOS)
+        // defined(DART_HOST_OS_MACOS) || defined(DART_HOST_OS_OHOS)

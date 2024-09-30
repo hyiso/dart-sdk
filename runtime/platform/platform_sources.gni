@@ -26,6 +26,7 @@ platform_sources = [
   "syslog_fuchsia.cc",
   "syslog_linux.cc",
   "syslog_macos.cc",
+  "syslog_ohos.cc",
   "syslog_win.cc",
   "text_buffer.cc",
   "text_buffer.h",
@@ -41,5 +42,6 @@ platform_sources = [
   "utils_fuchsia.cc",
   "utils_linux.cc",
   "utils_macos.cc",
+  "utils_ohos.cc",
   "utils_win.cc",
 ]

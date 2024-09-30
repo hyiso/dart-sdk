@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 #include "platform/globals.h"
-#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#if defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
 
 #include "bin/directory.h"
 
@@ -424,7 +424,7 @@ const char* Directory::SystemTemp(Namespace* namespc) {
     temp_dir = getenv("TMP");
   }
   if (temp_dir == nullptr) {
-#if defined(DART_HOST_OS_ANDROID)
+#if defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
     temp_dir = "/data/local/tmp";
 #else
     temp_dir = "/tmp";
@@ -515,4 +515,4 @@ bool Directory::Rename(Namespace* namespc,
 }  // namespace bin
 }  // namespace dart
 
-#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID)
+#endif  // defined(DART_HOST_OS_LINUX) || defined(DART_HOST_OS_ANDROID) || defined(DART_HOST_OS_OHOS)
